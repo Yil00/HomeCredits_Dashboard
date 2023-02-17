@@ -7,7 +7,7 @@ La société financière Prêt à dépenser propose des crédits à la consommat
 ___________________
 L’entreprise souhaite mettre en œuvre un outil de scoring crédit qui calcule la probabilité qu’un client rembourse son crédit, puis classifie la demande en crédit accordé ou refusé. Elle souhaite donc développer un algorithme de classification en s'appuyant sur des sources de données variées (données comportementales, données provenant d'autres institutions financières, etc.).
 _______________________________________________
-**Dasboard - "HOME CREDID"**(by Streamlit) :
+**Dasboard - "HOME CREDIT"**(by Streamlit) :
 
 De plus, les chargés de relation client ont fait remonter le fait que les clients sont de plus en plus demandeurs de transparence vis-à-vis des décisions d’octroi de crédit. 
 
