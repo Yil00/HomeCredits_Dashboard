@@ -8,7 +8,6 @@ blinker==1.5
 Boruta==0.3
 BorutaShap==1.0.16
 cachetools==5.2.0
-catboost==1.1.1
 charset-normalizer==2.1.1
 cloudpickle==2.2.1
 cmaes==0.9.1
