@@ -43,8 +43,6 @@ __version__ = '0.0.0'
 # Logo de l'entreprise
 logo =  Image.open("images\logo.png") 
 # Légende des courbes
-#lineplot_legende =  Image.open("resources/images/lineplot_legende.png") 
-
 st.title("Crédit Banks - Home")
 
 URL_API= "http://127.0.0.1:5003"
@@ -67,19 +65,19 @@ def main():
 URL_API= "http://127.0.0.1:5003"
 @st.cache #mise en cache de la fonction pour exécution unique
 def lecture_X_test_original():
-    X_test_original = pd.read_csv("Data\X_test_original.csv")
+    X_test_original = pd.read_csv("Data/X_test_original.csv")
     X_test_original = X_test_original.rename(columns=str.lower)
     return X_test_original
 
 @st.cache 
 def lecture_X_test_clean():
-    X_test_clean = pd.read_csv("Data\X_test_clean.csv")
+    X_test_clean = pd.read_csv("Data/X_test_clean.csv")
     #st.dataframe(X_test_clean)
     return X_test_clean
 
 @st.cache 
 def lecture_description_variables():
-    description_variables = pd.read_csv("Data\description_variable.csv", sep=";")
+    description_variables = pd.read_csv("Data/description_variable.csv", sep=";")
     return description_variables
 
 @st.cache 
@@ -88,6 +86,15 @@ def calcul_valeurs_shap():
         explainer = shap.TreeExplainer(model_LGBM)
         shap_values = explainer.shap_values(lecture_X_test_clean().drop(labels="sk_id_curr", axis=1))
         return shap_values
+@st.cache
+# Utiliser une fonction pour créer un identifiant unique à chaque appel
+def get_widget_id():
+    global widget_id
+    widget_id += 1
+    return str(widget_id)
+
+
+
 
 if __name__ == "__main__":
 
@@ -197,7 +204,7 @@ if __name__ == "__main__":
                                 'borderwidth': 1,
                                 'bordercolor': 'gray',
                                 'steps': [{'range': [0, 20], 'color': '#008000'},
-                                        {'range': [20, 40], 'color': '#00FF00'},
+                                        {'range': [20, 40], 'color': 'azure'},
                                         {'range': [40, 60], 'color': 'yellow'},
                                         {'range': [60, 80], 'color': 'orange'},
                                         {'range': [80, 100], 'color': 'red'}],
@@ -552,6 +559,95 @@ if __name__ == "__main__":
         st.pyplot(fig)
     else:
         st.markdown(" ", unsafe_allow_html=False)
+    ##########Graphique Unique varié 
+    if  st.sidebar.checkbox("Feature Analyze :"):
+
+        df = pd.read_csv("Data/X_test_original.csv")
+
+        num_cols = df.select_dtypes(include=['number']).columns
+        num_df = df[num_cols]
+
+        # Sélection des colonnes non-numériques
+        non_num_cols = df.select_dtypes(exclude=['number']).columns
+        non_num_df = df[non_num_cols]
+        # Liste des variables
+        liste_variables2 = num_df.drop("SK_ID_CURR", axis=1).columns.tolist()
+
+        model_LGBM = pickle.load(open("model_LGBM.pkl", "rb"))
+        y_pred_lgbm = model_LGBM.predict(lecture_X_test_clean().drop(labels="sk_id_curr", axis=1))    # Prédiction de la classe 0 ou 1
+        y_pred_lgbm_proba = model_LGBM.predict_proba(lecture_X_test_clean().drop(labels="sk_id_curr", axis=1)) # Prédiction du % de risque
+
+        # Récupération du score du client
+        y_pred_lgbm_proba_df = pd.DataFrame(y_pred_lgbm_proba, columns=['proba_classe_0', 'proba_classe_1'])
+        y_pred_lgbm_proba_df = pd.concat([y_pred_lgbm_proba_df['proba_classe_1'],
+                                lecture_X_test_clean()['sk_id_curr']], axis=1)
+        
+        #Prédit score dans le graphique(point d'affichage dans l'analyse bivariée)
+        dfID = y_pred_lgbm_proba_df
+        valueID =dfID["sk_id_curr"]
+
+        # Merge tableau pour deuxième graphique
+        df01 = y_pred_lgbm_proba_df
+        df02 = num_df
+        df01.columns = ['proba_classe_1','SK_ID_CURR']
+        # Fusionner les dataframes sur la colonne "id"
+        merged_df = pd.merge(df01, df02, on='SK_ID_CURR', how='left')
+        # Score pred
+        value0 = merged_df['proba_classe_1'] 
+        value1ID = merged_df["SK_ID_CURR"]
+        #%ise en avant de notre client coordonnée X et Y :
+        #a = merged_df.loc[merged_df["SK_ID_CURR"] == 100001] 
+        #a1 = a["SK_ID_CURR"]
+        #a2 = a1[0]
+        #
+        #a = merged_df.loc[merged_df["SK_ID_CURR"] == 100001] 
+        #b1 = a["proba_classe_1"]
+        #b2 = b1[0]
+
+
+        col1, col2, = st.columns(2) # division de la largeur de la page en 2 pour diminuer la taille du menu déroulant
+        with col1:
+            ID_var2 = st.selectbox("*Veuillez sélectionner une variable à l'aide du menu déroulant 👇*", 
+                                    (liste_variables2))
+            st.write("Vous avez sélectionné la variable :", ID_var2)
+
+            # Création de l'histogramme interactif avec Plotly Express
+            fig = px.histogram(num_df, x=ID_var2, nbins=20, text_auto=True,color_discrete_sequence = ['darkred'], barmode="overlay")
+
+            # Modifier les couleurs des barres en bleu
+            #fig.update_traces(marker=dict(color='red'), selector=dict(type='bar'))
+            fig.update_layout(bargap=0.1, bargroupgap=0.1)
+
+            # Affichage de l'histogramme interactif avec Plotly
+            st.plotly_chart(fig)
+        
+        #Graphique multivariée 
+        col1, col2, = st.columns(2) # division de la largeur de la page en 2 pour diminuer la taille du menu déroulant
+        widget_id = (id for id in range(7, 100_00))
+        widget_id2 = (id for id in range(4, 100_00))
+        widget_id3 = (id for id in range(9, 100_00))
+        with col1:
+            ID_var3 = st.selectbox("*Veuillez sélectionner une variable à l'aide du menu déroulant 👇*", 
+                                       (liste_variables2),key=next(widget_id))
+            st.write("Vous avez sélectionné la variable :", ID_var3)
+            
+            ID_var4 = st.selectbox("*Veuillez sélectionner une variable à l'aide du menu déroulant 👇*", 
+                                       (liste_variables2),key=next(widget_id2))
+            st.write("Vous avez sélectionné la variable :", ID_var4)
+
+            ID_var5 = st.selectbox("*Veuillez sélectionner une variable à l'aide du menu déroulant 👇*", 
+                                       (value1ID),key=next(widget_id3))
+            st.write("Vous avez sélectionné la variable :", ID_var5)
+
+            # Choisir la colonne pour la légende
+            legende_colonne = float(score_value)  # num_cols[0]    #"nom_colonne_legende"
+
+            # Création du graphique à l'aide de la fonction scatter de Plotly avec la légende
+            fig2 = px.scatter(merged_df, x=ID_var3, y=ID_var4, color=value0,
+                             labels={ID_var3: ID_var3, ID_var4: ID_var4, legende_colonne: 'Score Prédiction'})
+            
+
+            st.plotly_chart(fig2)
 
 
 if __name__ == '__main__':
