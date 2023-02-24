@@ -13,7 +13,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import requests
 import json 
-#from zipfile import ZipFile
+import os
 from sklearn.cluster import KMeans
 from PIL import Image
 plt.style.use('fivethirtyeight')
@@ -23,10 +23,9 @@ import lightgbm as lgb
 from lightgbm import LGBMClassifier
 from streamlit_shap import st_shap
 from xplotter.insights import *
-#import colorama
-#from colorama import Fore, Style
+
 # ====================================================================
-# Version : 0.0.1 - CRE LR 01/02/2023
+# Version : 0.0.1 - 01/02/2023
 # ====================================================================
 
 __version__ = '0.0.0'
@@ -41,11 +40,12 @@ __version__ = '0.0.0'
 # IMAGES
 # ====================================================================
 # Logo de l'entreprise
-logo =  Image.open("images\logo.png") 
+# logo =  Image.open("imageslogo.png")
+path = "images" 
+logo = (os.path.join(path,"logo.png"))
 # Légende des courbes
 st.title("Crédit Banks - Home")
 
-URL_API= "http://127.0.0.1:5003"
 ########################
 # Lecture des fichiers #
 ########################
