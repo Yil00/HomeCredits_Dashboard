@@ -105,7 +105,7 @@ if __name__ == "__main__":
     # Titre 1
     st.markdown("""
                 <h1 style="color:#fff8dc;font-size:2.3em;font-style:italic;font-weight:700;margin:0px;">
-                1. Home Crédit - Prêt à dépendeser :</h1>
+                1. Home Crédit - Prêt à dépenser :</h1>
                 """, 
                 unsafe_allow_html=True)
     st.write("")
