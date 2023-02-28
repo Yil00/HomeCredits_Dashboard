@@ -62,7 +62,8 @@ def main():
         targets = data.TARGET.value_counts()
         return nb_credits, rev_moy, credits_moy, targets
 
-URL_API= "http://127.0.0.1:5003"
+#URL_API= "http://127.0.0.1:5003" - locale
+URL_API = "https://apiprojet7.herokuapp.com"
 @st.cache #mise en cache de la fonction pour exécution unique
 def lecture_X_test_original():
     X_test_original = pd.read_csv("Data/X_test_original.csv")
@@ -105,7 +106,7 @@ if __name__ == "__main__":
     # Titre 1
     st.markdown("""
                 <h1 style="color:#fff8dc;font-size:2.3em;font-style:italic;font-weight:700;margin:0px;">
-                1. Home Crédit - Prêt à dépenser :</h1>
+                1. Home Crédit - Prêt à dépenser 📑:</h1>
                 """, 
                 unsafe_allow_html=True)
     st.write("")
@@ -223,7 +224,7 @@ if __name__ == "__main__":
     ################################
     # Titre 2
     
-    if  st.sidebar.checkbox("Détails: Score-Client (+ information ...) "):
+    if  st.sidebar.checkbox("Détails: Score-Client (information .💬) "):
 
         st.markdown("""
                     <h1 style="color:#fff8dc;font-size:2.3em;font-style:italic;font-weight:700;margin:0px;">
@@ -648,6 +649,14 @@ if __name__ == "__main__":
             
 
             st.plotly_chart(fig2)
+
+            fig3 = px.scatter_3d(merged_df, x=ID_var4, y='SK_ID_CURR', z=ID_var3,
+                    color=value0, size=value0, size_max=18,
+                    opacity=0.7)#symbol='species'
+
+            # Mettre à jour la mise en page pour avoir des marges serrées
+            fig3.update_layout(margin=dict(l=0, r=0, b=0, t=0))
+            st.plotly_chart(fig3, use_container_width=False)
 
 
 if __name__ == '__main__':
