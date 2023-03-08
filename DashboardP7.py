@@ -650,13 +650,13 @@ if __name__ == "__main__":
 
             st.plotly_chart(fig2)
 
-            fig3 = px.scatter_3d(merged_df, x=ID_var4, y='SK_ID_CURR', z=ID_var3,
-                    color=value0, size=value0, size_max=18,
-                    opacity=0.7)#symbol='species'
-
-            # Mettre à jour la mise en page pour avoir des marges serrées
-            fig3.update_layout(margin=dict(l=0, r=0, b=0, t=0))
-            st.plotly_chart(fig3, use_container_width=False)
+            # fig3 = px.scatter_3d(merged_df, x=ID_var4, y='SK_ID_CURR', z=ID_var3,
+            #         color=value0, size=value0, size_max=18,
+            #         opacity=0.7)#symbol='species'
+# 
+            # # Mettre à jour la mise en page pour avoir des marges serrées
+            # fig3.update_layout(margin=dict(l=0, r=0, b=0, t=0))
+            # st.plotly_chart(fig3, use_container_width=False)
 
 
 if __name__ == '__main__':
