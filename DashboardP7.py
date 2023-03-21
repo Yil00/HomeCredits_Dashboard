@@ -560,7 +560,9 @@ if __name__ == "__main__":
         st.pyplot(fig)
     else:
         st.markdown(" ", unsafe_allow_html=False)
-    ##########Graphique Unique varié 
+        #######################################
+    ##########- Graphique Unique varié -##################
+        #######################################
     if  st.sidebar.checkbox("Feature Analyze :"):
 
         df = pd.read_csv("Data/X_test_original.csv")
