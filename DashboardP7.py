@@ -35,6 +35,126 @@ __version__ = '0.0.0'
 # ====================================================================
 # CHARGEMENT DES DONNEES
 # ====================================================================
+# ====================================================================
+# CHARGEMENT DES DONNEES
+# ====================================================================
+# Répertoire de sauvegarde du meilleur modèle
+FILE_BEST_MODELE = 'Source\df_best_model.pickle'
+# Répertoire de sauvegarde des dataframes nécessaires au dashboard
+# Test set brut original
+FILE_APPLICATION_TEST = "Source\df_application_test.pickle"
+# Test set pré-procédé
+FILE_TEST_SET = "Source\df_test_set.pickle"
+# Dashboard
+FILE_DASHBOARD = 'Source\df_dashboard.pickle'
+# Client
+FILE_CLIENT_INFO = 'Source\df_info_client.pickle'
+FILE_CLIENT_PRET = 'Source\df_pret_client.pickle'
+# 10 plus proches voisins du train set
+FILE_VOISINS_INFO = 'Source\df_info_voisins.pickle'
+FILE_VOISIN_PRET = 'Source\df_pret_voisins.pickle'
+FILE_VOISIN_AGG = 'Source\df_voisin_train_agg.pickle'
+FILE_ALL_TRAIN_AGG = 'Source\df_all_train_agg.pickle'
+# Shap values
+FILE_SHAP_VALUES = 'Source\shap_values.pickle'
+# ====================================================================
+# VARIABLES GLOBALES
+# ====================================================================
+group_val1 = ['AMT_ANNUITY',
+              'BUREAU_CURRENT_CREDIT_DEBT_DIFF_MIN',
+              'BUREAU_CURRENT_CREDIT_DEBT_DIFF_MEAN',
+              'BUREAU_CURRENT_DEBT_TO_CREDIT_RATIO_MEAN',
+              'INST_PAY_AMT_INSTALMENT_SUM']
+
+group_val2 = ['CAR_EMPLOYED_RATIO', 'CODE_GENDER',
+              'CREDIT_ANNUITY_RATIO', 'CREDIT_GOODS_RATIO',
+              'YEAR_BIRTH', 'YEAR_ID_PUBLISH',
+              'EXT_SOURCE_1', 'EXT_SOURCE_2', 'EXT_SOURCE_3',
+              'EXT_SOURCE_MAX', 'EXT_SOURCE_SUM',
+              'FLAG_OWN_CAR',
+              'INST_PAY_DAYS_PAYMENT_RATIO_MAX',
+              'POS_CASH_NAME_CONTRACT_STATUS_ACTIVE_SUM',
+              'PREV_APP_INTEREST_SHARE_MAX']
+
+group_val3 = ['AMT_ANNUITY_MEAN',
+              'BUREAU_CURRENT_CREDIT_DEBT_DIFF_MIN_MEAN',
+              'BUREAU_CURRENT_CREDIT_DEBT_DIFF_MEAN_MEAN',
+              'BUREAU_CURRENT_DEBT_TO_CREDIT_RATIO_MEAN_MEAN',
+              'INST_PAY_AMT_INSTALMENT_SUM_MEAN']
+
+group_val4 = ['CAR_EMPLOYED_RATIO_MEAN', 'CODE_GENDER_MEAN',
+              'CREDIT_ANNUITY_RATIO_MEAN', 'CREDIT_GOODS_RATIO_MEAN',
+              'YEAR_BIRTH_MEAN', 'YEAR_ID_PUBLISH_MEAN',
+              'EXT_SOURCE_1_MEAN', 'EXT_SOURCE_2_MEAN', 'EXT_SOURCE_3_MEAN',
+              'EXT_SOURCE_MAX_MEAN', 'EXT_SOURCE_SUM_MEAN',
+              'FLAG_OWN_CAR_MEAN',
+              'INST_PAY_DAYS_PAYMENT_RATIO_MAX_MEAN',
+              'POS_CASH_NAME_CONTRACT_STATUS_ACTIVE_SUM_MEAN',
+              'PREV_APP_INTEREST_SHARE_MAX_MEAN']
+
+# ====================================================================
+# CHARGEMENT DES DONNEES
+# ====================================================================
+# Chargement du modèle et des différents dataframes
+# @st.cache(persist = True)
+def load():
+    with st.spinner('Import des données'):
+        
+        # Import du dataframe des informations des traits stricts du client
+        with open(FILE_CLIENT_INFO, 'rb') as df_info_client:
+            df_info_client = pickle.load(df_info_client)
+            
+        # Import du dataframe des informations sur le prêt du client
+        with open(FILE_CLIENT_PRET, 'rb') as df_pret_client:
+            df_pret_client = pickle.load(df_pret_client)
+            
+        # Import du dataframe des informations des traits stricts des voisins
+        with open(FILE_VOISINS_INFO, 'rb') as df_info_voisins:
+            df_info_voisins = pickle.load(df_info_voisins)
+            
+        # Import du dataframe des informations sur le prêt des voisins
+        with open(FILE_VOISIN_PRET, 'rb') as df_pret_voisins:
+            df_pret_voisins = pickle.load(df_pret_voisins)
+
+        # Import du dataframe des informations sur le dashboard
+        with open(FILE_DASHBOARD, 'rb') as df_dashboard:
+            df_dashboard = pickle.load(df_dashboard)
+
+        # Import du dataframe des informations sur les voisins aggrégés
+        with open(FILE_VOISIN_AGG, 'rb') as df_voisin_train_agg:
+            df_voisin_train_agg = pickle.load(df_voisin_train_agg)
+
+        # Import du dataframe des informations sur les voisins aggrégés
+        with open(FILE_ALL_TRAIN_AGG, 'rb') as df_all_train_agg:
+            df_all_train_agg = pickle.load(df_all_train_agg)
+
+        # Import du dataframe du test set nettoyé et pré-procédé
+        with open(FILE_TEST_SET, 'rb') as df_test_set:
+            test_set = pickle.load(df_test_set)
+
+        # Import du dataframe du test set brut original
+        with open(FILE_APPLICATION_TEST, 'rb') as df_application_test:
+            application_test = pickle.load(df_application_test)
+
+        # Import du dataframe du test set brut original
+        with open(FILE_SHAP_VALUES, 'rb') as shap_values:
+            shap_values = pickle.load(shap_values)
+            
+    # Import du meilleur modèle lgbm entrainé
+    with st.spinner('Import du modèle'):
+        
+        # Import du meilleur modèle lgbm entrainé
+        with open(FILE_BEST_MODELE, 'rb') as df_best_model:
+            best_model = pickle.load(df_best_model)
+         
+    return df_info_client, df_pret_client, df_info_voisins, df_pret_voisins, \
+        df_dashboard, df_voisin_train_agg, df_all_train_agg, test_set, \
+            application_test, shap_values, best_model
+
+# Chargement des dataframes et du modèle
+df_info_client, df_pret_client, df_info_voisins, df_pret_voisins, \
+    df_dashboard, df_voisin_train_agg, df_all_train_agg, test_set, \
+            application_test, shap_values, best_model = load()
 
 # ====================================================================
 # IMAGES
@@ -43,6 +163,8 @@ __version__ = '0.0.0'
 # logo =  Image.open("imageslogo.png")
 path = "images" 
 logo = (os.path.join(path,"logo.png"))
+# Légende des courbes
+lineplot_legende =  Image.open("images\lineplot_legende2.png") 
 # Légende des courbes
 st.title("Crédit Banks - Home")
 
@@ -597,13 +719,6 @@ if __name__ == "__main__":
         value0 = merged_df['proba_classe_1'] 
         value1ID = merged_df["SK_ID_CURR"]
         #%ise en avant de notre client coordonnée X et Y :
-        #a = merged_df.loc[merged_df["SK_ID_CURR"] == 100001] 
-        #a1 = a["SK_ID_CURR"]
-        #a2 = a1[0]
-        #
-        #a = merged_df.loc[merged_df["SK_ID_CURR"] == 100001] 
-        #b1 = a["proba_classe_1"]
-        #b2 = b1[0]
 
 
         col1, col2, = st.columns(2) # division de la largeur de la page en 2 pour diminuer la taille du menu déroulant
@@ -657,7 +772,204 @@ if __name__ == "__main__":
             # # Mettre à jour la mise en page pour avoir des marges serrées
             # fig3.update_layout(margin=dict(l=0, r=0, b=0, t=0))
             # st.plotly_chart(fig3, use_container_width=False)
+# ====================================================================
+# CHOIX DU CLIENT
+# ====================================================================
 
+    html_select_client="""
+        <div class="card">
+          <div class="card-body" style="border-radius: 10px 10px 0px 0px;
+                      background: #DEC7CB; padding-top: 5px; width: auto;
+                      height: 40px;">
+            <h3 class="card-title" style="background-color:#DEC7CB; color:blue;
+                       font-family:Georgia; text-align: center; padding: 0px 0;">
+              Fiche-informations sur le client 
+            </h3>
+          </div>
+        </div>
+        """
+
+    st.markdown(html_select_client, unsafe_allow_html=True)
+
+    with st.container():
+        col1, col2 = st.columns([1,3])
+        with col1:
+            st.write("")
+            col1.header("**ID Client**")
+            client_id = col1.selectbox('Sélectionnez un client :',
+                                       df_info_voisins['ID_CLIENT'].unique())
+        with col2:
+            # Infos principales client
+            # st.write("*Traits stricts*")
+            client_info = df_info_client[df_info_client['SK_ID_CURR'] == client_id].iloc[:, :]
+            client_info.set_index('SK_ID_CURR', inplace=True)
+            st.table(client_info)
+            # Infos principales sur la demande de prêt
+            # st.write("*Demande de prêt*")
+            client_pret = df_pret_client[df_pret_client['SK_ID_CURR'] == client_id].iloc[:, :]
+            client_pret.set_index('SK_ID_CURR', inplace=True)
+            st.table(client_pret)
+
+# ====================================================================
+# SIDEBAR
+# ====================================================================
+
+    # Toutes Les informations non modifiées du client courant
+    df_client_origin = application_test[application_test['SK_ID_CURR'] == client_id]
+
+    # Toutes Les informations non modifiées du client courant
+    df_client_test = test_set[test_set['SK_ID_CURR'] == client_id]
+
+    # Les informations pré-procédées du client courant
+    df_client_courant = df_dashboard[df_dashboard['SK_ID_CURR'] == client_id]
+
+
+        # ====================== GRAPHIQUES COMPARANT CLIENT COURANT / CLIENTS SIMILAIRES =========================== 
+    if st.sidebar.checkbox("Graphiques comparatifs : "):     
+        
+        #if titre:
+        #    st.markdown(html_clients_similaires, unsafe_allow_html=True)
+        #    titre = False
+        
+        with st.spinner('**Affiche les graphiques comparant le client courant et les clients similaires...**'):                 
+                       
+            with st.expander('Comparaison variables impactantes notre Cliend ID/aux moyennes des clients similaires',
+                             expanded=True):
+                with st.container():
+                    # Préparatifs dataframe
+                    df_client = df_voisin_train_agg[df_voisin_train_agg['ID_CLIENT'] == client_id].astype(int)
+                    # ====================================================================
+                    # Lineplot comparatif features importances client courant/voisins
+                    # ====================================================================
+                    # ===================== Valeurs moyennes des features importances pour le client courant =====================
+
+                    df_feat_client  = df_client_courant[['SK_ID_CURR', 'AMT_ANNUITY',
+                               'BUREAU_CURRENT_CREDIT_DEBT_DIFF_MIN',
+                               'BUREAU_CURRENT_CREDIT_DEBT_DIFF_MEAN',
+                               'BUREAU_CURRENT_DEBT_TO_CREDIT_RATIO_MEAN',
+                               'CAR_EMPLOYED_RATIO', 'CODE_GENDER',
+                               'CREDIT_ANNUITY_RATIO', 'CREDIT_GOODS_RATIO',
+                               'DAYS_BIRTH', 'DAYS_ID_PUBLISH',
+                               'EXT_SOURCE_1', 'EXT_SOURCE_2', 'EXT_SOURCE_3',
+                               'EXT_SOURCE_MAX', 'EXT_SOURCE_SUM',
+                               'FLAG_OWN_CAR', 'INST_PAY_AMT_INSTALMENT_SUM',
+                               'INST_PAY_DAYS_PAYMENT_RATIO_MAX',
+                               'POS_CASH_NAME_CONTRACT_STATUS_ACTIVE_SUM',
+                               'PREV_APP_INTEREST_SHARE_MAX']]
+                    df_feat_client['YEAR_BIRTH'] = \
+                        np.trunc(np.abs(df_feat_client['DAYS_BIRTH'] / 365)).astype('int8')
+                    df_feat_client['YEAR_ID_PUBLISH'] = \
+                        np.trunc(np.abs(df_feat_client['DAYS_ID_PUBLISH'] / 365)).astype('int8')
+                    df_feat_client.drop(columns=['DAYS_BIRTH', 'DAYS_ID_PUBLISH'],
+                                        inplace=True)
+                    df_feat_client_gp1 = df_feat_client[group_val1]
+                    df_feat_client_gp2 = df_feat_client[group_val2]
+                    # X
+                    x_gp1 = df_feat_client_gp1.columns.to_list()
+                    x_gp2 = df_feat_client_gp2.columns.to_list()
+                    # y
+                    y_feat_client_gp1 = df_feat_client_gp1.values[0].tolist()
+                    y_feat_client_gp2 = df_feat_client_gp2.values[0].tolist()
+                    
+                    # ===================== Valeurs moyennes des features importances pour les 10 voisins =======================
+                    df_moy_feat_voisins = df_client[['ID_CLIENT', 'AMT_ANNUITY_MEAN',
+                               'BUREAU_CURRENT_CREDIT_DEBT_DIFF_MIN_MEAN',
+                               'BUREAU_CURRENT_CREDIT_DEBT_DIFF_MEAN_MEAN',
+                               'BUREAU_CURRENT_DEBT_TO_CREDIT_RATIO_MEAN_MEAN',
+                               'CAR_EMPLOYED_RATIO_MEAN', 'CODE_GENDER_MEAN',
+                               'CREDIT_ANNUITY_RATIO_MEAN', 'CREDIT_GOODS_RATIO_MEAN',
+                               'DAYS_BIRTH_MEAN', 'DAYS_ID_PUBLISH_MEAN',
+                               'EXT_SOURCE_1_MEAN', 'EXT_SOURCE_2_MEAN', 'EXT_SOURCE_3_MEAN',
+                               'EXT_SOURCE_MAX_MEAN', 'EXT_SOURCE_SUM_MEAN',
+                               'FLAG_OWN_CAR_MEAN', 'INST_PAY_AMT_INSTALMENT_SUM_MEAN',
+                               'INST_PAY_DAYS_PAYMENT_RATIO_MAX_MEAN',
+                               'POS_CASH_NAME_CONTRACT_STATUS_ACTIVE_SUM_MEAN',
+                               'PREV_APP_INTEREST_SHARE_MAX_MEAN']]
+                    df_moy_feat_voisins['YEAR_BIRTH_MEAN'] = \
+                        np.trunc(np.abs(df_moy_feat_voisins['DAYS_BIRTH_MEAN'] / 365)).astype('int8')
+                    df_moy_feat_voisins['YEAR_ID_PUBLISH_MEAN'] = \
+                        np.trunc(np.abs(df_moy_feat_voisins['DAYS_ID_PUBLISH_MEAN'] / 365)).astype('int8')
+                    df_moy_feat_voisins.drop(columns=['DAYS_BIRTH_MEAN', 'DAYS_ID_PUBLISH_MEAN'],
+                                        inplace=True)
+                    df_moy_feat_voisins_gp3 = df_moy_feat_voisins[group_val3]
+                    df_moy_feat_voisins_gp4 = df_moy_feat_voisins[group_val4]
+                    # y
+                    y_moy_feat_voisins_gp3 = df_moy_feat_voisins_gp3.values[0].tolist()
+                    y_moy_feat_voisins_gp4 = df_moy_feat_voisins_gp4.values[0].tolist()
+                    
+                    # ===================== Valeurs moyennes de tous les clients non-défaillants/défaillants du train sets =======================
+                    df_all_train = df_all_train_agg[['TARGET', 'AMT_ANNUITY_MEAN',
+                               'BUREAU_CURRENT_CREDIT_DEBT_DIFF_MIN_MEAN',
+                               'BUREAU_CURRENT_CREDIT_DEBT_DIFF_MEAN_MEAN',
+                               'BUREAU_CURRENT_DEBT_TO_CREDIT_RATIO_MEAN_MEAN',
+                               'CAR_EMPLOYED_RATIO_MEAN', 'CODE_GENDER_MEAN',
+                               'CREDIT_ANNUITY_RATIO_MEAN', 'CREDIT_GOODS_RATIO_MEAN',
+                               'YEAR_BIRTH_MEAN', 'DAYS_ID_PUBLISH_MEAN',
+                               'EXT_SOURCE_1_MEAN', 'EXT_SOURCE_2_MEAN', 'EXT_SOURCE_3_MEAN',
+                               'EXT_SOURCE_MAX_MEAN', 'EXT_SOURCE_SUM_MEAN',
+                               'FLAG_OWN_CAR_MEAN', 'INST_PAY_AMT_INSTALMENT_SUM_MEAN',
+                               'INST_PAY_DAYS_PAYMENT_RATIO_MAX_MEAN',
+                               'POS_CASH_NAME_CONTRACT_STATUS_ACTIVE_SUM_MEAN',
+                               'PREV_APP_INTEREST_SHARE_MAX_MEAN']]
+                    df_all_train['YEAR_ID_PUBLISH_MEAN'] = \
+                        np.trunc(np.abs(df_all_train['DAYS_ID_PUBLISH_MEAN'] / 365)).astype('int8')
+                    df_all_train.drop(columns=['DAYS_ID_PUBLISH_MEAN'],
+                                        inplace=True)
+                    # Non-défaillants
+                    df_all_train_nondef_gp3 = df_all_train[df_all_train['TARGET'] == 0][group_val3]
+                    df_all_train_nondef_gp4 = df_all_train[df_all_train['TARGET'] == 0][group_val4]
+                    # Défaillants
+                    df_all_train_def_gp3 = df_all_train[df_all_train['TARGET'] == 1][group_val3]
+                    df_all_train_def_gp4 = df_all_train[df_all_train['TARGET'] == 1][group_val4]
+                    # y
+                    # Non-défaillants
+                    y_all_train_nondef_gp3 = df_all_train_nondef_gp3.values[0].tolist()
+                    y_all_train_nondef_gp4 = df_all_train_nondef_gp4.values[0].tolist()
+                    # Défaillants
+                    y_all_train_def_gp3 = df_all_train_def_gp3.values[0].tolist()
+                    y_all_train_def_gp4 = df_all_train_def_gp4.values[0].tolist()
+                                                  
+                    col1,col2 = st.columns([1, 1.5])
+                    with col1:
+                        st.image(lineplot_legende)
+                      
+                    with col2: 
+                        # Lineplot de comparaison des features importances client courant/voisins/all ================
+                        plt.figure(figsize=(12, 8))
+                        plt.plot(x_gp2, y_feat_client_gp2, color='Orange')
+                        plt.plot(x_gp2, y_moy_feat_voisins_gp4, color='Green')
+                        plt.plot(x_gp2, y_all_train_nondef_gp4, color='Green')
+                        plt.plot(x_gp2, y_all_train_def_gp4, color='Crimson')
+                        plt.xticks(rotation=90)
+                        st.set_option('deprecation.showPyplotGlobalUse', False)
+                        st.pyplot()
+                        
+                    with st.container(): 
+                        
+                        vars_select = ['AMT_ANNUITY', 
+                                       'BUREAU_CURRENT_CREDIT_DEBT_DIFF_MIN',
+                                       'BUREAU_CURRENT_CREDIT_DEBT_DIFF_MEAN',
+                                       'BUREAU_CURRENT_DEBT_TO_CREDIT_RATIO_MEAN',
+                                       'CAR_EMPLOYED_RATIO', 
+                                       'CODE_GENDER',
+                                       'CREDIT_ANNUITY_RATIO',
+                                       'CREDIT_GOODS_RATIO',
+                                       'EXT_SOURCE_1', 
+                                       'EXT_SOURCE_2', 
+                                       'EXT_SOURCE_3',
+                                       'EXT_SOURCE_MAX', 
+                                       'EXT_SOURCE_SUM',
+                                       'FLAG_OWN_CAR',
+                                       'INST_PAY_AMT_INSTALMENT_SUM',
+                                       'INST_PAY_DAYS_PAYMENT_RATIO_MAX',
+                                       'NAME_EDUCATION_TYPE_HIGHER_EDUCATION',
+                                       'POS_CASH_NAME_CONTRACT_STATUS_ACTIVE_SUM',
+                                       'PREV_APP_INTEREST_SHARE_MAX',
+                                       'YEAR_BIRTH', 
+                                       'YEAR_ID_PUBLISH']
+
+                        feat_imp_to_show = st.multiselect("Feature(s) importance(s) à visualiser : ",
+                                                          vars_select)
 
 if __name__ == '__main__':
     main()
