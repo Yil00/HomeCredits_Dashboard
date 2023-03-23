@@ -682,7 +682,9 @@ if __name__ == "__main__":
         st.pyplot(fig)
     else:
         st.markdown(" ", unsafe_allow_html=False)
-    ##########Graphique Unique varié 
+        #######################################
+    ##########- Graphique Unique varié -##################
+        #######################################
     if  st.sidebar.checkbox("Feature Analyze :"):
 
         df = pd.read_csv("Data/X_test_original.csv")
@@ -772,9 +774,6 @@ if __name__ == "__main__":
             # # Mettre à jour la mise en page pour avoir des marges serrées
             # fig3.update_layout(margin=dict(l=0, r=0, b=0, t=0))
             # st.plotly_chart(fig3, use_container_width=False)
-# ====================================================================
-# CHOIX DU CLIENT
-# ====================================================================
 
     html_select_client="""
         <div class="card">
