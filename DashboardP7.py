@@ -48,7 +48,7 @@ FILE_TEST_SET = "Source\df_test_set.pickle"
 # Dashboard
 FILE_DASHBOARD = 'Source\df_dashboard.pickle'
 # Client
-FILE_CLIENT_INFO = 'Source'+ '\df_info_client.pickle'
+FILE_CLIENT_INFO = 'Source'+ '/df_info_client.pickle'
 FILE_CLIENT_PRET = 'Source\df_pret_client.pickle'
 # 10 plus proches voisins du train set
 FILE_VOISINS_INFO = 'Source\df_info_voisins.pickle'
