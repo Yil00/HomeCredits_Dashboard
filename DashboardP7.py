@@ -164,7 +164,7 @@ df_info_client, df_pret_client, df_info_voisins, df_pret_voisins, \
 path = "images" 
 logo = (os.path.join(path,"logo.png"))
 # Légende des courbes
-lineplot_legende =  Image.open("images/lineplot_legende2.png") 
+lineplot_legende =  Image.open("Source/lineplot_legende.png") 
 # Légende des courbes
 st.title("Crédit Banks - Home")
 
