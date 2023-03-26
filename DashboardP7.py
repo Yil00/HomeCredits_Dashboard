@@ -39,24 +39,24 @@ __version__ = '0.0.0'
 # CHARGEMENT DES DONNEES
 # ====================================================================
 # Répertoire de sauvegarde du meilleur modèle
-FILE_BEST_MODELE = 'Source\df_best_model.pickle'
+FILE_BEST_MODELE = 'Source/df_best_model.pickle'
 # Répertoire de sauvegarde des dataframes nécessaires au dashboard
 # Test set brut original
-FILE_APPLICATION_TEST = "Source\df_application_test.pickle"
+FILE_APPLICATION_TEST = "Source/df_application_test.pickle"
 # Test set pré-procédé
-FILE_TEST_SET = "Source\df_test_set.pickle"
+FILE_TEST_SET = "Source/df_test_set.pickle"
 # Dashboard
-FILE_DASHBOARD = 'Source\df_dashboard.pickle'
+FILE_DASHBOARD = 'Source/df_dashboard.pickle'
 # Client
 FILE_CLIENT_INFO = 'Source'+ '/df_info_client.pickle'
-FILE_CLIENT_PRET = 'Source\df_pret_client.pickle'
+FILE_CLIENT_PRET = 'Source/df_pret_client.pickle'
 # 10 plus proches voisins du train set
-FILE_VOISINS_INFO = 'Source\df_info_voisins.pickle'
-FILE_VOISIN_PRET = 'Source\df_pret_voisins.pickle'
-FILE_VOISIN_AGG = 'Source\df_voisin_train_agg.pickle'
-FILE_ALL_TRAIN_AGG = 'Source\df_all_train_agg.pickle'
+FILE_VOISINS_INFO = 'Source/df_info_voisins.pickle'
+FILE_VOISIN_PRET = 'Source/df_pret_voisins.pickle'
+FILE_VOISIN_AGG = 'Source/df_voisin_train_agg.pickle'
+FILE_ALL_TRAIN_AGG = 'Source/df_all_train_agg.pickle'
 # Shap values
-FILE_SHAP_VALUES = 'Source\shap_values.pickle'
+FILE_SHAP_VALUES = 'Source/shap_values.pickle'
 # ====================================================================
 # VARIABLES GLOBALES
 # ====================================================================
