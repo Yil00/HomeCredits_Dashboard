@@ -788,7 +788,7 @@ if __name__ == "__main__":
         </div>
         """
 
-    st.markdown(html_select_client, unsafe_allow_html=False)
+    st.markdown(html_select_client)
 
     with st.container():
         col1, col2 = st.columns([1,3])
