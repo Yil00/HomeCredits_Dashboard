@@ -775,18 +775,18 @@ if __name__ == "__main__":
             # fig3.update_layout(margin=dict(l=0, r=0, b=0, t=0))
             # st.plotly_chart(fig3, use_container_width=False)
 
-    html_select_client="""
-        <div class="card">
-          <div class="card-body" style="border-radius: 10px 10px 0px 0px;
-                      background: #DEC7CB; padding-top: 5px; width: auto;
-                      height: 40px;">
-            <h3 class="card-title" style="background-color:#DEC7CB; color:blue;
-                       font-family:Georgia; text-align: center; padding: 0px 0;">
-              Fiche-informations sur le client 
-            </h3>
-          </div>
-        </div>
-        """
+   # html_select_client="""
+    #    <div class="card">
+     #     <div class="card-body" style="border-radius: 10px 10px 0px 0px;
+      #                background: #DEC7CB; padding-top: 5px; width: auto;
+       #               height: 40px;">
+        #    <h3 class="card-title" style="background-color:#DEC7CB; color:blue;
+         #              font-family:Georgia; text-align: center; padding: 0px 0;">
+          #    Fiche-informations sur le client 
+           # </h3>
+          #</div>
+        #</div>
+        #"""
 
     st.markdown(html_select_client, unsafe_allow_html=True)
 
