@@ -96,7 +96,7 @@ group_val4 = ['CAR_EMPLOYED_RATIO_MEAN', 'CODE_GENDER_MEAN',
 # CHARGEMENT DES DONNEES
 # ====================================================================
 # Chargement du modèle et des différents dataframes
-# @st.cache(persist = True)
+@st.cache(persist = True)
 def load():
     with st.spinner('Import des données'):
         
