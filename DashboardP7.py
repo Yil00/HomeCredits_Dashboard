@@ -31,12 +31,8 @@ from xplotter.insights import *
 __version__ = '0.0.0'
 
 # ====================================================================
-
 # ====================================================================
-# CHARGEMENT DES DONNEES
-# ====================================================================
-# ====================================================================
-# CHARGEMENT DES DONNEES
+# CHARGEMENT DES DONNEES -1
 # ====================================================================
 # Répertoire de sauvegarde du meilleur modèle
 FILE_BEST_MODELE = 'Source/df_best_model.pickle'
@@ -93,7 +89,7 @@ group_val4 = ['CAR_EMPLOYED_RATIO_MEAN', 'CODE_GENDER_MEAN',
               'PREV_APP_INTEREST_SHARE_MAX_MEAN']
 
 # ====================================================================
-# CHARGEMENT DES DONNEES
+# CHARGEMENT DES DONNEES -2
 # ====================================================================
 # Chargement du modèle et des différents dataframes
 @st.cache(persist = True)
@@ -522,166 +518,7 @@ if __name__ == "__main__":
     ###############################################################
     # Comparaison du profil du client à son groupe d'appartenance #
     ###############################################################    
-    #lecture_X_test_original()
-    #lecture_X_test_clean()
-    #lecture_description_variables()
-    #calcul_valeurs_shap()
 
-    # Titre 1
-    #if  st.sidebar.checkbox("Contribution des variables :"):
-        #st.markdown("""
-         #           <h1 style="color:#fff8dc;font-size:2.3em;font-style:italic;font-weight:700;margin:0px;">
-          #          5. Les variables les plus importantes pour comprendre nos prédiction ?</h1>
-          #          """, 
-           #         unsafe_allow_html=True)
-        #st.write("")
-
-        #st.write("L’importance des variables est calculée en moyennant la valeur absolue des valeurs de Shap. \
-         #       Les caractéristiques sont classées de l'effet le plus élevé au plus faible sur la prédiction. \
-          #      Le calcul prend en compte la valeur SHAP absolue, donc peu importe si la fonctionnalité affecte \
-           #     la prédiction de manière positive ou négative.")
-
-        #st.write("Pour résumer, les valeurs de Shapley calculent l’importance d’une variable en comparant ce qu’un modèle prédit \
-         #       avec et sans cette variable. Cependant, étant donné que l’ordre dans lequel un modèle voit les variables peut affecter \
-          #      ses prédictions, cela se fait dans tous les ordres possibles, afin que les fonctionnalités soient comparées équitablement. \
-           #     Cette approche est inspirée de la théorie des jeux.")
-
-       # st.write("*__Le diagramme d'importance des variables__* répertorie les variables les plus significatives par ordre décroissant.\
-        #        Les *__variables en haut__* contribuent davantage au modèle que celles en bas et ont donc un *__pouvoir prédictif élevé__*.")
-
-       # fig = plt.figure()
-       # plt.title("Diagramme Feature importance", 
-         #       fontname='Roboto Condensed',
-          #      fontsize=20, 
-           #     fontstyle='italic')
-       # if  st.checkbox('Feature importance : '):
-        #    st_shap(shap.summary_plot(calcul_valeurs_shap()[1], 
-         #                       feature_names=lecture_X_test_clean().drop(labels="sk_id_curr", axis=1).columns,
-          #                      plot_size=(12, 6),
-           #                     color='#daa520',
-            #                    plot_type="bar",
-             #                   max_display=10,
-              #                  show = False))
-            #plt.show()
-    #else:
-     #   st.markdown("", unsafe_allow_html=False)
-
-    # Titre 2
-    #if  st.sidebar.checkbox("Niveau d'importance des critères:"):
-     #   st.markdown("""
-      #              <h1 style="color:#fff8dc;font-size:2.3em;font-style:italic;font-weight:700;margin:0px;">
-       #             2. Quel est le niveau d'impact de chacune de nos variables sur nos prédiction ?</h1>
-        #            """, 
-         #           unsafe_allow_html=True)
-        #st.write("")
-
-        #st.write("Le diagramme des valeurs SHAP ci-dessous indique également comment chaque caractéristique impacte la prédiction. \
-         #       Les valeurs de Shap sont représentées pour chaque variable dans leur ordre d’importance. \
-          #      Chaque point représente une valeur de Shap (pour un client).")
-        #st.write("Les points jaune représentent des valeurs élevées de la variable et les points verts-blue des valeurs basses de la variable.")
-
-        #fig = plt.figure()
-        #plt.title("Interprétation Globale :\n Impact de chaque caractéristique sur la prédiction\n", 
-         #       fontname='Roboto Condensed',
-          #      fontsize=20, 
-           #     fontstyle='italic')
-        #st_shap(shap.summary_plot(calcul_valeurs_shap()[1], 
-         #                       features=lecture_X_test_clean().drop(labels="sk_id_curr", axis=1),
-          #                      feature_names=lecture_X_test_clean().drop(labels="sk_id_curr", axis=1).columns,
-           #                     plot_size=(12, 16),
-            #                    cmap='viridis',
-             #                   plot_type="dot",
-              #                  max_display=10,
-               #                 show = False))
-        #plt.show()
-    #else:
-    #    st.markdown(" ", unsafe_allow_html=False)
-
-        #st.write("14 variables ont un impact significatif sur la prédiction.")
-        
-        #if st.checkbox("légende des critères"):
-         #  st.markdown("""
-          #  1. Plus la valeur du 'Score normalisé à partir d'une source de données externe' est faible (points de couleur vert), 
-           #    et plus la valeur Shap est élevée et donc plus le modèle prédit que le client aura des difficultés de paiement.<br>
-            #2. Plus la dernière demande de crédit du client, avant la demande actuelle, enregistrée au bureau des crédits, est récente 
-             #  (points de couleur vert), plus la valeur Shap est élevée et donc plus le modèle prédit qu'il aura des difficultés de paiement.<br>
-            #3. Plus le montant payé par le client par rapport au montant attendu est faible (points de couleur vert), 
-             #  plus la valeur Shap est élevée et donc plus le modèle pédit que le client aura des difficultés de paiement.<br>
-            #4. Si le client est un homme, la valeur Shap est élevée et donc plus le modèle prédit qu'il aura des difficultés de paiement.<br>
-            #5. Plus la durée mensuelle du contrat pécédent du client est élevé (points de couleur fuchsia), 
-             #  plus la valeur Shap est élevée et donc plus le modèle prédit qu'il aura des difficultés de paiement.<br>
-            #6. Plus le nombre de contrats pécédents refusés pour le client est élevé (points de couleur fuchsia), 
-             #  plus la valeur Shap est élevée et donc plus le modèle prédit qu'il aura des difficultés de paiement.<br>
-            #7. Plus le client est jeune (points de couleur vert), plus la valeur Shap est élevée et
-             #  donc plus le modèle prédit qu'il aura des difficultés de paiement.<br>
-            #8. Lorsque le client n'est pas allé dans l'enseignement supérieur (points vert), 
-             #  la valeur Shap est élevée et donc plus le modèle pédit que le client aura des difficultés de paiement.<br>
-            #9. Nombre de crédits soldés du client enregistrés au bureau du crédit : *impact indéfini* <br>
-            #10. Plus le nombre de versements réalisés par la client est faible (points de couleur vert), 
-             #   plus la valeur Shap est élevée et donc plus le modèle prédit qu'il aura des difficultés de paiement.
-            #11. Plus l'ancienneté du client dans son entreprise est faible (points de couleur vert), 
-             #   plus la valeur Shap est élevée et donc plus le modèle prédit qu'il aura des difficultés de paiement.
-            #12. Plus le nombre de Cartes de Crédit du client enregistrées au bureau du crédit est élevé (points de couleur fuchsia),
-             #   plus la valeur Shap est élevée et donc plus le modèle prédit qu'il aura des difficultés de paiement.
-            #13. Plus le montant de la demande de prêt actuelle du client est élevé (points de couleur fuchsia), 
-             #   plus la valeur Shap est élevée et donc plus le modèle prédit qu'il aura des difficultés de paiement.
-            #14. Plus le montant de la demande de prêt précédente du client est faible (points de couleur vert), 
-             #   plus la valeur Shap est élevée et donc plus le modèle prédit qu'il aura des difficultés de paiement.
-              #      """, 
-               #     unsafe_allow_html=True)
-
-    #else:
-     #   st.markdown(" ", unsafe_allow_html=False)
-    
-    # Titre 2
-   # if  st.sidebar.checkbox("Plus de détails :"):
-    #    st.markdown("""
-     #               <h1 style="color:#fff8dc;font-size:2.3em;font-style:italic;font-weight:700;margin:0px;">
-      #              Bonus. Graphique de dépendance</h1>
-       #             """, 
-        #            unsafe_allow_html=True)
-        #st.write("Nous pouvons obtenir un aperçu plus approfondi de l'effet de chaque fonctionnalité \
-        #          sur l'ensemble de données avec un graphique de dépendance.")
-        #st.write("Le dependence plot permet d’analyser les variables deux par deux en suggérant une possiblité d’observation des interactions.\
-         #         Le scatter plot représente une dépendence entre une variable (en x) et les shapley values (en y) \
-          #        colorée par la variable la plus corrélées.")
-
-        ################################################################################
-        # Création et affichage du sélecteur des variables et des graphs de dépendance #
-        ################################################################################
-        #liste_variables = lecture_X_test_clean().drop(labels="sk_id_curr", axis=1).columns.to_list()
-
-        #col1, col2, = st.columns(2) # division de la largeur de la page en 2 pour diminuer la taille du menu déroulant
-        #with col1:
-         #   ID_var = st.selectbox("*Veuillez sélectionner une variable à l'aide du menu déroulant 👇*", 
-          #                          (liste_variables))
-           # st.write("Vous avez sélectionné la variable :", ID_var)
-
-        #fig = plt.figure(figsize=(12, 4))
-       # ax1 = fig.add_subplot(121)
-        #shap.dependence_plot(ID_var, 
-         #                   calcul_valeurs_shap()[1], 
-          #                  lecture_X_test_clean().drop(labels="sk_id_curr", axis=1), 
-           #                 interaction_index=None,
-            #                alpha = 0.5,
-             #               x_jitter = 0.5,
-              #              title= "Graphique de Dépendance",
-               #             ax=ax1,
-                #            show = False)
-        #ax2 = fig.add_subplot(122)
-        #shap.dependence_plot(ID_var, 
-         #                   calcul_valeurs_shap()[1], 
-          #                  lecture_X_test_clean().drop(labels="sk_id_curr", axis=1), 
-           #                 interaction_index='auto',
-            #                alpha = 0.5,
-             #               x_jitter = 0.5,
-              #              title= "Graphique de Dépendance et Intéraction",
-               #             ax=ax2,
-                #            show = False)
-      #  fig.tight_layout()
-       # st.pyplot(fig)
-    #else:
-     #   st.markdown(" ", unsafe_allow_html=False)
         #######################################
     ##########- Graphique Unique varié -##################
         #######################################
@@ -767,28 +604,22 @@ if __name__ == "__main__":
 
             st.plotly_chart(fig2)
 
-            # fig3 = px.scatter_3d(merged_df, x=ID_var4, y='SK_ID_CURR', z=ID_var3,
-            #         color=value0, size=value0, size_max=18,
-            #         opacity=0.7)#symbol='species'
-# 
-            # # Mettre à jour la mise en page pour avoir des marges serrées
-            # fig3.update_layout(margin=dict(l=0, r=0, b=0, t=0))
-            # st.plotly_chart(fig3, use_container_width=False)
 
-    #html_select_client= """
-        #<div class="card">
-         # <div class="card-body" style="border-radius: 10px 10px 0px 0px;
-          #            background: #DEC7CB; padding-top: 5px; width: auto;
-           #           height: 40px;">
-            #<h3 class="card-title" style="background-color:#DEC7CB; color:blue;
-             #          font-family:Georgia; text-align: center; padding: 0px 0;">
-              #Fiche-informations sur le client 
-            #</h3>
-          #</div>
-        #</div>
-        #"""
 
-    #st.markdown(html_select_client,unsafe_allow_html=True)
+    html_select_client= """
+        <div class="card">
+          <div class="card-body" style="border-radius: 10px 10px 0px 0px;
+                     background: #DEC7CB; padding-top: 5px; width: auto;
+                      height: 40px;">
+            <h3 class="card-title" style="background-color:#DEC7CB; color:blue;
+                       font-family:Georgia; text-align: center; padding: 0px 0;">
+              Fiche-informations sur le client 
+            </h3>
+          </div>
+        </div>
+        """
+
+    st.markdown(html_select_client,unsafe_allow_html=True)
 
     with st.container():
         col1, col2 = st.columns([1,3])
