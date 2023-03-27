@@ -317,7 +317,7 @@ if __name__ == "__main__":
                         domain = {'x': [0, 1], 'y': [0, 1]},
                         value = float(score_value),
                         mode = "gauge+number+delta",
-                        title = {'text': "Score du client", 'font': {'size': 24}},
+                        title = {'text': "Risque défault du client - Score", 'font': {'size': 24}},
                         delta = {'reference': 30, 'increasing': {'color': "#3b203e"}},
                         gauge = {'axis': {'range': [None, 100],
                                 'tickwidth': 3,
